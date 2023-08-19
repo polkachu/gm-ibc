@@ -1,0 +1,9 @@
+{% include 'header.toml.j2' %}
+
+{%- for route in routes %}
+    {%- for chain in chains %}
+        {%- if chain['network'] == route['chain'] %}
+            {%- include 'chain.toml.j2' %}
+        {%- endif %}
+    {%- endfor %}
+{%- endfor %}

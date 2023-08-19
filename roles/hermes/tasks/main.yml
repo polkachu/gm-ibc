@@ -1,0 +1,51 @@
+---
+- name: make hermes dir
+  file:
+    path: '/home/{{ ansible_user }}/{{ hermes_directory }}/'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    state: directory
+
+- name: Get the chain data
+  uri:
+    url: '{{ chains_api }}'
+    status_code: 200
+    body_format: json
+  register: chains_data
+
+- name: Parse the chain data and set fact
+  set_fact:
+    chains: '{{ chains_data.json }}'
+
+- name: Copy hermes config script with customization
+  template:
+    src: '{{ target }}.toml.j2'
+    dest: '/home/{{ ansible_user }}/{{ hermes_directory }}/{{ target }}.toml'
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0644'
+
+- name: create hermes systemd unit
+  become: true
+  template:
+    src: 'hermes.service.j2'
+    dest: '/etc/systemd/system/hermes_{{ target }}.service'
+    owner: root
+    group: root
+    mode: '644'
+
+- name: Open hermes telemetry port
+  become: true
+  ufw:
+    rule: allow
+    proto: tcp
+    port: '{{ telemetry_port }}'
+
+- name: start hermes service
+  become: true
+  systemd:
+    name: 'hermes_{{ target }}'
+    state: restarted
+    daemon_reload: yes
+    enabled: yes
+  changed_when: false

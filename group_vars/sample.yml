@@ -1,0 +1,12 @@
+---
+hermes_directory: '.hermes'
+rest_port: 3001
+telemetry_port: 4001
+chains_api: https://polkachu.com/api/v1/chains_test
+routes:
+  - chain: cosmos
+    ip: 'YOUR IP'
+    connections: ['osmosis']
+  - chain: osmosis
+    ip: 'YOUR IP'
+    connections: ['cosmos']

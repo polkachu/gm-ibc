@@ -1,0 +1,30 @@
+[global]
+log_level = 'info'
+
+[mode]
+[mode.clients]
+enabled = true
+refresh = true
+misbehaviour = false
+
+[mode.connections]
+enabled = true
+
+[mode.channels]
+enabled = true
+
+[mode.packets]
+enabled = true
+clear_interval = 200
+clear_on_start = true
+tx_confirmation = true
+
+[rest]
+enabled = true
+host = '0.0.0.0'
+port = {{ rest_port }}
+
+[telemetry]
+enabled = true
+host = '0.0.0.0'
+port = {{ telemetry_port }}
