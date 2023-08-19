@@ -1,3 +1,3 @@
 # gm-ibc
 
-Every day you wake up, you say GM IBC.
+Every day we wake up, you say "GM IBC".
