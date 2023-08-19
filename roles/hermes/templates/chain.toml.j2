@@ -15,9 +15,9 @@ max_gas = {{ chain['max_gas'] }}
 gas_multiplier = {{ chain['gas_multiplier'] }}
 gas_price = { price = {{ chain['gas_price'] }}, denom = "{{ chain['denom'] }}" }
 max_msg_num = 30
-max_tx_size = 1800000
+max_tx_size = {{ chain['max_tx_size'] }}
 clock_drift = "15s"
-max_block_time = "10s"
+max_block_time = "30s"
 trusting_period = "{{ chain['trusting_period'] }}"
 memo_prefix = "{{ memo }}"
 trust_threshold = { numerator = '1', denominator = '3' }
