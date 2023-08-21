@@ -1,42 +1,38 @@
 
 [[chains]]
 id = "{{ chain['chain_id'] }}"
+ccv_consumer_chain = false
+
 rpc_addr = "http://{{ route['ip'] }}:{{ chain['port_prefix'] }}57"
 grpc_addr = "http://{{ route['ip'] }}:{{ chain['port_prefix'] }}90"
-event_source = { mode = 'push', url = "ws://{{ route['ip'] }}:{{ chain['port_prefix'] }}57/websocket", batch_delay = '500ms' }
+# event_source = { mode = 'push', url = "ws://{{ route['ip'] }}:{{ chain['port_prefix'] }}57/websocket", batch_delay = '500ms' }
+event_source = { mode = 'pull', interval = '1s' }
 
-type = "CosmosSdk"
-rpc_timeout = "20s"
+rpc_timeout = "10s"
+trusted_node = true
 account_prefix = "{{ chain['account_prefix'] }}"
 key_name = "{{ key_name }}"
+key_store_type = "Test"
+address_type = { derivation = 'cosmos' }
 store_prefix = "ibc"
 default_gas = {{ chain['default_gas'] }}
 max_gas = {{ chain['max_gas'] }}
+gas_price = { price = {{ chain['gas_price'] }}, denom = "{{ chain['denom'] }}" }
 gas_multiplier = {{ chain['gas_multiplier'] }}
 max_msg_num = 30
 max_tx_size = {{ chain['max_tx_size'] }}
 clock_drift = "15s"
 max_block_time = "30s"
 trusting_period = "{{ chain['trusting_period'] }}"
+trust_threshold = { numerator = '1', denominator = '3' }
 memo_prefix = "{{ memo }}"
-
-[chains.address_type]
-derivation = 'cosmos'
-
-[chains.trust_threshold]
-numerator = '1'
-denominator = '3'
-
-[chains.gas_price]
-price = {{ chain['gas_price'] }}
-denom = "{{ chain['denom'] }}"
 
 [chains.packet_filter]
 policy = 'allow'
 list = [
 {% for channel in chain['channels'] %}
-{% if channel['dest'] in route['connections'] %}
-  ['{{ channel['port'] }}', '{{ channel['channel'] }}'], {{ "#" }} {{ channel['dest'] }}
+{% if channel['destination'] in route['connections'] %}
+  ['{{ channel['port'] }}', '{{ channel['channel'] }}'], {{ "#" }} {{ channel['destination'] }}
 {% endif %}
 {% endfor %}
 ]
