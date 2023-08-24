@@ -14,7 +14,7 @@ Chain Registry solves some problems, but it is not enough for IBC relayers. It i
 
 GM IBC is to maintain a source of truth for IBC with an opinionated and centralized design. We will be inferior to Chain Registry when if you value openness and community participation, but we will make it up by offering better tools to make relayer's life easier. We dog-food these tools ourselves so it is a worthwhile effort even if we are the only users.
 
-- A public API endpoint to fetch all IBC config data. The API endpoint is temporarily at https://polkachu.com/api/v1/chains_test
+- A public API endpoint to fetch all IBC config data. The API endpoint is at https://polkachu.com/api/v1/ibcs
 - An open-sourced Ansible playbook to use the API data to compose and deploy a Hermes relayer in a few seconds.
 - A frontend tool to help a relayer to generate Hermes config snippets on the fly.
 
