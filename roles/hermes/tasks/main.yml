@@ -19,11 +19,18 @@
 
 - name: Copy hermes config script with customization
   template:
-    src: '{{ target }}.toml.j2'
+    src: '{{ group }}.toml.j2'
     dest: '/home/{{ ansible_user }}/{{ hermes_directory }}/config.toml'
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
     mode: '0644'
+
+- name: Open hermes telemetry port
+  become: true
+  ufw:
+    rule: allow
+    proto: tcp
+    port: '{{ telemetry_port }}'
 
 - name: create hermes systemd unit
   become: true
@@ -33,13 +40,7 @@
     owner: root
     group: root
     mode: '644'
-
-- name: Open hermes telemetry port
-  become: true
-  ufw:
-    rule: allow
-    proto: tcp
-    port: '{{ telemetry_port }}'
+  when: role is defined and role == 'main'
 
 - name: start hermes service
   become: true
@@ -49,3 +50,4 @@
     daemon_reload: yes
     enabled: yes
   changed_when: false
+  when: role is defined and role == 'main'

@@ -34,6 +34,9 @@ max_block_time = "30s"
 trusting_period = "{{ chain['trusting_period'] }}"
 trust_threshold = { numerator = '1', denominator = '3' }
 memo_prefix = "{{ memo }}"
+{% if route['compat_mode'] is defined %}
+compat_mode = "{{ route['compat_mode'] }}"
+{% endif %}
 
 {% if route['address_type'] is defined and route['address_type'] == 'injective'  %}
 address_type = { derivation = 'ethermint', proto_type = { pk_type = '/injective.crypto.v1beta1.ethsecp256k1.PubKey' } }

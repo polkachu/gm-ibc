@@ -1,6 +1,6 @@
 ---
 - name: Main
-  hosts: '{{ target }}_relayer'
+  hosts: '{{ target }}'
   gather_facts: false
   vars_files:
     - 'group_vars/{{ target }}.yml'

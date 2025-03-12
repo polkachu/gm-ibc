@@ -44,7 +44,7 @@ cp group_vars/sample.yml group_vars/mainnet.yml
 Finally run the playbook. If you make some minimum changes to the config files, you should have a relayer between CosmosHub and Osmosis running now.
 
 ```bash
-ansible-playbook main.yml -e "target=mainnet"
+ansible-playbook hermes.yml -e "target=mainnet"
 ```
 
 # Conclusion
